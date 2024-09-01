@@ -38,8 +38,8 @@ Resources:
         - Key: Name
           Value: AppPrivateSubnet1A
 
-# created a private subnet for the application database
-#AZ 1
+  # created a private subnet for the application database
+  #AZ 1
   DataPrivateSubnet1A:
     Type: AWS::EC2::Subnet
     Properties:
@@ -50,11 +50,8 @@ Resources:
         - Key: Name
           Value: DataPrivateSubnet1A
 
-
-
-
-# creating a public subnet
-#AZ 2
+  # creating a public subnet
+  #AZ 2
   PublicSubnet2B:
     Type: AWS::EC2::Subnet
     Properties:
@@ -79,8 +76,8 @@ Resources:
         - Key: Name
           Value: AppPrivateSubnet2B
 
-# created a private subnet for the application database
-#AZ 2
+  # created a private subnet for the application database
+  #AZ 2
   DataPrivateSubnet2B:
     Type: AWS::EC2::Subnet
     Properties:
@@ -91,43 +88,46 @@ Resources:
         - Key: Name
           Value: DataPrivateSubnet2B
 
-
-# creating internet gateway igw
+  # creating internet gateway igw
 
   InternetGateway:
-    Type: 'AWS::EC2:InternetGateway'
+    Type: "AWS::EC2:InternetGateway"
     Properties:
-      Tags: 
-      - Key: Name
-        Value: MyVPC-IGW
+      Tags:
+        - Key: Name
+          Value: MyVPC-IGW
 
-
-# Attaching internet gateway to VPC 
+  # Attaching internet gateway to VPC
 
   AttachGateway:
-    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Type: "AWS::EC2::VPCGatewayAttachment"
     Properties:
       VpcId: !Ref MyVPC
       InternetGatewayId: InternetGateway
 
-  #Creating public route table 
+  #Creating public route table
 
   PublicRouteTable:
-    Type: 'AWS::EC2::RouteTable'
+    Type: "AWS::EC2::RouteTable"
     Properties:
       VpcId: !Ref MyVPC
       Tags:
-      - Key: Name 
-        Value: PublicRouteTable
+        - Key: Name
+          Value: PublicRouteTable
 
-
-# specifying a single route in the route table upon 
+  # specifying a single route in the public route table upon
   PublicRoute:
-    Type: 'AWS::EC2::Route'
+    Type: "AWS::EC2::Route"
     DepondsOn: AttachGateway
     Properties:
       RouteTablesId: PublicRouteTable
-      DestinationCidrBlock: '0.0.0.0/0'
+      DestinationCidrBlock: "0.0.0.0/0"
       GatewayId: InternetGateway
 
+  # public subnet association with PublicSubnet1A
 
+  PublicSubnet1ARouteTableAssociation:
+    Type: "AWS:EC2::SubnetRouteTableAssociation"
+    Properties:
+    SubnetId: !Ref PublicSubnet1A
+    RouteTableId: !Ref PublicRouteTable
