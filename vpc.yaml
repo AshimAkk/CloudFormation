@@ -18,6 +18,7 @@ Resources:
       VpcId: !Ref MyVPC
       CidrBlock: '176.16.1.0/24'
       AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
       Tags:
       - Key: Name
         Value: PublicSubnet1A
