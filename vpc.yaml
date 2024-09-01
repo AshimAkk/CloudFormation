@@ -121,3 +121,13 @@ Resources:
         Value: PublicRouteTable
 
 
+# specifying a single route in the route table upon 
+  PublicRoute:
+    Type: 'AWS::EC2::Route'
+    DepondsOn: AttachGateway
+    Properties:
+      RouteTablesId: PublicRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: InternetGateway
+
+
