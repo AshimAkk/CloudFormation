@@ -12,6 +12,7 @@ Resources:
       - Key: Name
         Value: MyVPC
 
+# creating a public subnet 
   PublicSubnet1A:
     Type: AWS::EC2::Subnet
     Properties:
@@ -23,4 +24,25 @@ Resources:
       - Key: Name
         Value: PublicSubnet1A
 
+# creating a private subnet for the application, so that it cannot be access from the internet 
 
+  AppPrivateSubnet1A:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: '176.16.2.0/24'
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+      - Key: Name
+        Value: AppPrivateSubnet1A
+
+
+DataPrivateSubnet1A:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: '176.16.3.0/24'
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+      - Key: Name
+        Value: DataPrivateSubnet1A
