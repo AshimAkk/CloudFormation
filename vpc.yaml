@@ -91,7 +91,7 @@ Resources:
   # creating internet gateway igw
 
   InternetGateway:
-    Type: "AWS::EC2:InternetGateway"
+    Type: 'AWS::EC2::InternetGateway'
     Properties:
       Tags:
         - Key: Name
@@ -100,15 +100,15 @@ Resources:
   # Attaching internet gateway to VPC
 
   AttachGateway:
-    Type: "AWS::EC2::VPCGatewayAttachment"
+    Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
       VpcId: !Ref MyVPC
-      InternetGatewayId: InternetGateway
+      InternetGatewayId: !Ref InternetGateway
 
   #Creating public route table
 
   PublicRouteTable:
-    Type: "AWS::EC2::RouteTable"
+    Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref MyVPC
       Tags:
@@ -117,17 +117,17 @@ Resources:
 
   # specifying a single route in the public route table upon
   PublicRoute:
-    Type: "AWS::EC2::Route"
-    DepondsOn: AttachGateway
+    Type: 'AWS::EC2::Route'
+    DependsOn: AttachGateway
     Properties:
-      RouteTablesId: PublicRouteTable
+      RouteTableId: !Ref PublicRouteTable
       DestinationCidrBlock: "0.0.0.0/0"
-      GatewayId: InternetGateway
+      GatewayId: !Ref InternetGateway
 
   # public subnet association with PublicSubnet1A
 
   PublicSubnet1ARouteTableAssociation:
-    Type: "AWS:EC2::SubnetRouteTableAssociation"
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
-    SubnetId: !Ref PublicSubnet1A
-    RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1A
+      RouteTableId: !Ref PublicRouteTable
