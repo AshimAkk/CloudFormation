@@ -110,4 +110,14 @@ Resources:
       VpcId: !Ref MyVPC
       InternetGatewayId: InternetGateway
 
-  
+  #Creating public route table 
+
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+      - Key: Name 
+        Value: PublicRouteTable
+
+
