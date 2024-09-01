@@ -90,3 +90,24 @@ Resources:
       Tags:
         - Key: Name
           Value: DataPrivateSubnet2B
+
+
+# creating internet gateway igw
+
+  InternetGateway:
+    Type: 'AWS::EC2:InternetGateway'
+    Properties:
+      Tags: 
+      - Key: Name
+        Value: MyVPC-IGW
+
+
+# Attaching internet gateway to VPC 
+
+  AttachGateway:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref MyVPC
+      InternetGatewayId: InternetGateway
+
+  
