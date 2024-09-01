@@ -5,10 +5,10 @@ Resources:
   MyVPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: '172.16.0.0.0/16'
+      CidrBlock: '172.16.0.0/16'
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
-      - key: Name
-        value: MyVPC
+      - Key: Name
+        Value: MyVPC
 
