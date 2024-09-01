@@ -1,94 +1,92 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: 'VPC creation'
+Description: "VPC creation"
 
 Resources:
   MyVPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: '172.16.0.0/16'
+      CidrBlock: "172.16.0.0/16"
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
-      - Key: Name
-        Value: MyVPC
+        - Key: Name
+          Value: MyVPC
 
-# creating a public subnet  
-#AZ 1
+  # creating a public subnet
+  #AZ 1
   PublicSubnet1A:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: '176.16.1.0/24'
-      AvailabilityZone: !Select [0, !GetAZs '']
+      CidrBlock: "172.16.1.0/24"
+      AvailabilityZone: !Select [0, !GetAZs ""]
       MapPublicIpOnLaunch: true
       Tags:
-      - Key: Name
-        Value: PublicSubnet1A
+        - Key: Name
+          Value: PublicSubnet1A
 
-# creating a private subnet for the application, so that it cannot be access from the internet 
-#AZ 1
+  # creating a private subnet for the application, so that it cannot be access from the internet
+  #AZ 1
 
   AppPrivateSubnet1A:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: '176.16.2.0/24'
-      AvailabilityZone: !Select [0, !GetAZs '']
+      CidrBlock: "172.16.2.0/24"
+      AvailabilityZone: !Select [0, !GetAZs ""]
       Tags:
-      - Key: Name
-        Value: AppPrivateSubnet1A
+        - Key: Name
+          Value: AppPrivateSubnet1A
 
-# created a private subnet for the application database 
+# created a private subnet for the application database
 #AZ 1
-DataPrivateSubnet1A:
+  DataPrivateSubnet1A:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: '176.16.3.0/24'
-      AvailabilityZone: !Select [0, !GetAZs '']
+      CidrBlock: "172.16.3.0/24"
+      AvailabilityZone: !Select [0, !GetAZs ""]
       Tags:
-      - Key: Name
-        Value: DataPrivateSubnet1A
+        - Key: Name
+          Value: DataPrivateSubnet1A
 
 
 
 
-
-
-# creating a public subnet  
+# creating a public subnet
 #AZ 2
   PublicSubnet2B:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: '176.16.4.0/24'
-      AvailabilityZone: !Select [1, !GetAZs '']
+      CidrBlock: "172.16.4.0/24"
+      AvailabilityZone: !Select [1, !GetAZs ""]
       MapPublicIpOnLaunch: true
       Tags:
-      - Key: Name
-        Value: PublicSubnet2B
+        - Key: Name
+          Value: PublicSubnet2B
 
-# creating a private subnet for the application, so that it cannot be access from the internet 
-#AZ 2
+  # creating a private subnet for the application, so that it cannot be access from the internet
+  #AZ 2
 
   AppPrivateSubnet2B:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: '176.16.5.0/24'
-      AvailabilityZone: !Select [1, !GetAZs '']
+      CidrBlock: "172.16.5.0/24"
+      AvailabilityZone: !Select [1, !GetAZs ""]
       Tags:
-      - Key: Name
-        Value: AppPrivateSubnet2B
+        - Key: Name
+          Value: AppPrivateSubnet2B
 
-# created a private subnet for the application database 
+# created a private subnet for the application database
 #AZ 2
-DataPrivateSubnet2B:
+  DataPrivateSubnet2B:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: '176.16.6.0/24'
-      AvailabilityZone: !Select [1, !GetAZs '']
+      CidrBlock: "172.16.6.0/24"
+      AvailabilityZone: !Select [1, !GetAZs ""]
       Tags:
-      - Key: Name
-        Value: DataPrivateSubnet2B
+        - Key: Name
+          Value: DataPrivateSubnet2B
