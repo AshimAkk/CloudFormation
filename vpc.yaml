@@ -91,7 +91,7 @@ Resources:
   # creating internet gateway igw
 
   InternetGateway:
-    Type: 'AWS::EC2::InternetGateway'
+    Type: "AWS::EC2::InternetGateway"
     Properties:
       Tags:
         - Key: Name
@@ -100,7 +100,7 @@ Resources:
   # Attaching internet gateway to VPC
 
   AttachGateway:
-    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Type: "AWS::EC2::VPCGatewayAttachment"
     Properties:
       VpcId: !Ref MyVPC
       InternetGatewayId: !Ref InternetGateway
@@ -108,7 +108,7 @@ Resources:
   #Creating public route table
 
   PublicRouteTable:
-    Type: 'AWS::EC2::RouteTable'
+    Type: "AWS::EC2::RouteTable"
     Properties:
       VpcId: !Ref MyVPC
       Tags:
@@ -117,7 +117,7 @@ Resources:
 
   # specifying a single route in the public route table upon
   PublicRoute:
-    Type: 'AWS::EC2::Route'
+    Type: "AWS::EC2::Route"
     DependsOn: AttachGateway
     Properties:
       RouteTableId: !Ref PublicRouteTable
@@ -127,30 +127,29 @@ Resources:
   # public subnet association with PublicSubnet1A
 
   PublicSubnet1ARouteTableAssociation:
-    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
     Properties:
       SubnetId: !Ref PublicSubnet1A
       RouteTableId: !Ref PublicRouteTable
 
+  # Bastion host EC2
 
-# Bastion host EC2
-
+ 
   BastionHost:
     Type: 'AWS::EC2::Instance'
     Properties:
       InstanceType: t2.micro
       KeyName: bastion
-      ImageId: ami-01fb4de0e9f8f22a7
+      ImageId: ami-0fd24d6aedf1e76c3
       SubnetId: !Ref PublicSubnet1A
       SecurityGroupIds:
         - !Ref BastionSG
       Tags:
-        - key: Name
-          Value: BastionHost         
+        - Key: Name
+          Value: BastionHost
 
-
-# Bastion ingress-Security group
-# had to find my own personal Ip address using google in order to allow me to SSH onto the bastion host
+  # Bastion ingress-Security group
+  # had to find my own personal Ip address using google in order to allow me to SSH onto the bastion host
 
   BastionSG:
     Type: 'AWS::EC2::SecurityGroup'
@@ -158,9 +157,7 @@ Resources:
       GroupDescription: 'Enable SSH access'
       VpcId: !Ref MyVPC
       SecurityGroupIngress:
-           - IpProtocol: tcp
-             FromPort: 22
-             ToPort: 22
-             CidrIp: 117.102.141.124
-      
-         
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 117.102.141.124/32
