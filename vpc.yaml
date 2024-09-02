@@ -139,12 +139,28 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       InstanceType: t2.micro
-      KeyName: !Ref KeyName
-      ImageId: ami-000
+      KeyName: bastion
+      ImageId: ami-01fb4de0e9f8f22a7
       SubnetId: !Ref PublicSubnet1A
       SecurityGroupIds:
         - !Ref BastionSG
       Tags:
         - key: Name
           Value: BastionHost         
-  
+
+
+# Bastion ingress-Security group
+# had to find my own personal Ip address using google in order to allow me to SSH onto the bastion host
+
+  BastionSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Enable SSH access'
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+           - IpProtocol: tcp
+             FromPort: 22
+             ToPort: 22
+             CidrIp: 117.102.141.124
+      
+         
