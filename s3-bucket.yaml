@@ -5,3 +5,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: 'ashim-s3-bucket'
+
+
+
+

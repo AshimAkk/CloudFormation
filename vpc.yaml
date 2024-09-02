@@ -131,3 +131,20 @@ Resources:
     Properties:
       SubnetId: !Ref PublicSubnet1A
       RouteTableId: !Ref PublicRouteTable
+
+
+# Bastion host EC2
+
+  BastionHost:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      ImageId: ami-000
+      SubnetId: !Ref PublicSubnet1A
+      SecurityGroupIds:
+        - !Ref BastionSG
+      Tags:
+        - key: Name
+          Value: BastionHost         
+  
