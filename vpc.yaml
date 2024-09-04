@@ -50,6 +50,8 @@ Resources:
         - Key: Name
           Value: DataPrivateSubnet1A
 
+
+
   # creating a public subnet
   #AZ 2
   PublicSubnet2B:
@@ -146,7 +148,7 @@ Resources:
         - !Ref BastionSG
       Tags:
         - Key: Name
-          Value: BastionHost
+          Value: Bastion-Host
 
   # Bastion ingress-Security group
   # had to find my own personal Ip address using google in order to allow me to SSH onto the bastion host
@@ -191,7 +193,7 @@ Resources:
           - !Ref AppInstance2BASG
         Tags:
             - Key: Name 
-              Value: AppInstance1A
+              Value: AppInstance2A
 
 
 #SG, reference the connection from bastion server; allow connection from bastion SG
