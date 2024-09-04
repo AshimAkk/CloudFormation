@@ -167,9 +167,10 @@ Resources:
   AppInstance1A:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
+        GroupDescription: 'creating AppInstance1A'
         InstanceType: t2.micro
-        KeyName: !Ref bastion 
-        ImageId: ami-0fd24d6aedf1e76c3
+        KeyName: bastion 
+        ImageId: ami-01fb4de0e9f8f22a7
         SubnetId: !Ref AppPrivateSubnet1A
         SecurityGroupIds:
           - !Ref AppInstance1AASG
@@ -183,10 +184,11 @@ Resources:
   AppInstance2B:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
+        GroupDescription: 'creating AppInstance2b for the second AZ'
         InstanceType: t2.micro
-        KeyName: !Ref bastion 
+        KeyName: bastion 
         ImageId: ami-0fd24d6aedf1e76c3
-        SubnetId: !Ref AppPrivateSubnet1B
+        SubnetId: !Ref AppPrivateSubnet2B
         SecurityGroupIds:
           - !Ref AppInstance2BASG
         Tags:
@@ -197,30 +199,31 @@ Resources:
 #SG, reference the connection from bastion server; allow connection from bastion SG
 #APP1A
 
-AppInstance1AASG:
-  Type : 'AWS::EC2:SecurityGroup'
-  Properties:
-    GroupDescription: 'Allow SSH from Bastion'
-    VpcId: !Ref MyVPC 
-    SecurityGroupIngress:
-      - IpProtocol: tcp 
-        FromPort: 22
-        ToPort: 22
-        SourceSecurityGroupId: !Ref BastionSG
 
 
+  AppInstance1AASG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Allow SSH from Bastion'
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          SourceSecurityGroupId: !Ref BastionSG
 
 
 #SG, referenced the connection from AppInstance1A, allows connection from AppInstance1A so that we can ping it 
 #APP2A
 
-AppInstance2BASG:
-  Type : 'AWS::EC2:SecurityGroup'
-  Properties:
-    GroupDescription: 'Allow ICMP Ping from AppInstance1A'
-    VpcId: !Ref MyVPC 
-    SecurityGroupIngress:
-      - IpProtocol: icmp 
-        FromPort: -1
-        ToPort: -1
-        SourceSecurityGroupId: !Ref AppInstance1AASG
+
+  AppInstance2BASG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Allow ICMP Ping from AppInstance1A'
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: icmp
+          FromPort: -1
+          ToPort: -1
+          SourceSecurityGroupId: !Ref AppInstance1AASG
