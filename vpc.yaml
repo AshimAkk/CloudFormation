@@ -176,3 +176,19 @@ Resources:
          Tags:
             - Key: Name 
               Value: AppInstance1A
+
+
+# second app instance in the second AZ
+
+   AppInstance2B:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+         InstanceType: t2.micro
+         KeyName: !Ref bastion 
+         ImageId: ami-0fd24d6aedf1e76c3
+         SubnetId: !Ref AppPrivateSubnet1B
+         SecurityGroupIds:
+          - !Ref AppInstance2BASG
+         Tags:
+            - Key: Name 
+              Value: AppInstance1A
