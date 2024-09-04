@@ -167,28 +167,46 @@ Resources:
   AppInstance1A:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-         InstanceType: t2.micro
-         KeyName: !Ref bastion 
-         ImageId: ami-0fd24d6aedf1e76c3
-         SubnetId: !Ref AppPrivateSubnet1A
-         SecurityGroupIds:
-          - !Ref AppInstanceASG
-         Tags:
+        InstanceType: t2.micro
+        KeyName: !Ref bastion 
+        ImageId: ami-0fd24d6aedf1e76c3
+        SubnetId: !Ref AppPrivateSubnet1A
+        SecurityGroupIds:
+          - !Ref AppInstance1AASG
+        Tags:
             - Key: Name 
               Value: AppInstance1A
 
 
 # second app instance in the second AZ
 
-   AppInstance2B:
+  AppInstance2B:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-         InstanceType: t2.micro
-         KeyName: !Ref bastion 
-         ImageId: ami-0fd24d6aedf1e76c3
-         SubnetId: !Ref AppPrivateSubnet1B
-         SecurityGroupIds:
+        InstanceType: t2.micro
+        KeyName: !Ref bastion 
+        ImageId: ami-0fd24d6aedf1e76c3
+        SubnetId: !Ref AppPrivateSubnet1B
+        SecurityGroupIds:
           - !Ref AppInstance2BASG
-         Tags:
+        Tags:
             - Key: Name 
               Value: AppInstance1A
+
+
+#SG, reference the connection from bastion server; allow connection from bastion SG
+AppInstance1AASG:
+  Type : 'AWS::EC2:SecurityGroup'
+  Properties:
+    GroupDescription: 'Allow SSH from Bastion'
+    VpcId: !Ref MyVPC 
+    SecurityGroupIngress:
+      - IpProtocol: tcp 
+        FromPort: 22
+        ToPort: 22
+        SourceSecurityGroupId: !Ref BastionSG
+
+
+
+
+#SG, referenced the connection from AppInstance1A, allows connection from AppInstance1A so that we can ping it 
