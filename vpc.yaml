@@ -195,6 +195,8 @@ Resources:
 
 
 #SG, reference the connection from bastion server; allow connection from bastion SG
+#APP1A
+
 AppInstance1AASG:
   Type : 'AWS::EC2:SecurityGroup'
   Properties:
@@ -210,3 +212,15 @@ AppInstance1AASG:
 
 
 #SG, referenced the connection from AppInstance1A, allows connection from AppInstance1A so that we can ping it 
+#APP2A
+
+AppInstance2BASG:
+  Type : 'AWS::EC2:SecurityGroup'
+  Properties:
+    GroupDescription: 'Allow ICMP Ping from AppInstance1A'
+    VpcId: !Ref MyVPC 
+    SecurityGroupIngress:
+      - IpProtocol: icmp 
+        FromPort: -1
+        ToPort: -1
+        SourceSecurityGroupId: !Ref AppInstance1AASG
