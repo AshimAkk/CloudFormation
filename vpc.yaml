@@ -161,3 +161,18 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 117.102.141.124/32
+
+# creating AppInstance1A 
+
+  AppInstance1A:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+         InstanceType: t2.micro
+         KeyName: !Ref bastion 
+         ImageId: ami-0fd24d6aedf1e76c3
+         SubnetId: !Ref AppPrivateSubnet1A
+         SecurityGroupIds:
+          - !Ref AppInstanceASG
+         Tags:
+            - Key: Name 
+              Value: AppInstance1A
