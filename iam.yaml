@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: 'creating IAM user'
+Description: 'IAM CloudFormation template'
 
 Resources:
   MyIAMUser:
