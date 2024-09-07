@@ -175,9 +175,20 @@ Resources:
 
 
 
-# #creating Launch Template 
-#   MyLaunchTemplate:
-#     Type: 'AWS::EC2::LaunchTemplate'
-#     Properties:
-#       LaunchTemplateName: 'EC2-Launch Template'
+# ASG
+# also specifing which subnets the ASG should sit in 
+  MyAutoScalingGroup:
+    Type: 'AWS::AutoScaling::AutoScalingGroup'
+    Properties:
+      LaunchConfigurationName: 
+        - !Ref MyLaunchConfiguration 
+      MaxSize: 3
+      MinSize: 1
+      DesiredCapacity: 2
+      VPCZoneIdentifier:
+        - !Ref PublicSubnet1A
+        - !Ref PublicSubnet2B
+      Tags:
+        - Key: Name
+          Value: 'My-AutoScalingGroup'
 
