@@ -53,13 +53,15 @@ Resources:
   MyIAMPolicy:
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: 'custome-policy'
-      PolicyDocument: Version '2012-10-17'
-      Statement:
-        - Effect: 'Allow'
-          Action: - "s3:GetObject"
-          Resource: '*'
-          Role:
+      PolicyName: 'CustomPolicy'
+      PolicyDocument: 
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Action:  
+              - "s3:GetObject"
+            Resource: '*'
+      Roles:
             - !Ref MyIAMRole
 
 
