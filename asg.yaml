@@ -156,20 +156,20 @@ Resources:
 
 # Creating Launch Configuration & also installing apache web server 
 
-#   MyLaunchConfiguration:
-#     Type: 'AWS::AutoScaling::LaunchConfiguration'
-#     Properties:
-#       ImageId: 'ami-0474411b350de35fb'
-#       InstanceType: 't2.micro'
-#       SecurityGroups:
-#           - !Ref WebServerSecurityGroup 
-#       UserData: 
-#         Fn::Base64: !Sub |
-#           #!/bin/bash
-#           yum install -y httpd
-#           systemctl start httpd 
-#           systemctl enable httpd
-#           echo "Hello from Web Server 1A" > /var/www/html/index.html
+  MyLaunchConfiguration:
+    Type: 'AWS::AutoScaling::LaunchConfiguration'
+    Properties:
+      ImageId: 'ami-0474411b350de35fb'
+      InstanceType: 't2.micro'
+      SecurityGroups:
+          - !Ref WebServerSecurityGroup 
+      UserData: 
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum install -y httpd
+          systemctl start httpd 
+          systemctl enable httpd
+          echo "Hello this is from the Auto Scaling Instance" > /var/www/html/index.html
 
 
 
