@@ -134,6 +134,14 @@ Resources:
       SubnetId: !Ref PublicSubnet1A
       RouteTableId: !Ref PublicRouteTable
 
+# public association with PublicSubnet2B
+  PublicSubnet2BRouteTableAssociation:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      SubnetId: !Ref PublicSubnet2B
+      RouteTableId: !Ref PublicRouteTable
+
+
 
 # Creating the ALB
 # ALB sits in the public subnets
@@ -155,7 +163,6 @@ Resources:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     Properties:
       VpcId: !Ref MyVPC
-      HealthCheckEnabled: true 
       Port: 80
       Protocol: 'HTTP'
       Targets:
@@ -179,12 +186,12 @@ Resources:
   WebServerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupDescription: 'Enable HTTP'
+      GroupDescription: 'Enable HTTP Access'
       VpcId: !Ref MyVPC
       SecurityGroupIngress:
         - IpProtocol: 'tcp'
-          FromPort: 80
-          ToPort: 80
+          FromPort: '80'
+          ToPort: '80'
           CidrIp: '0.0.0.0/0'
 
 
@@ -208,7 +215,7 @@ Resources:
           yum install -y httpd
           systemctl start httpd 
           systemctl enable httpd
-          echo "Hello from Web Server 1A" > /var/www/html/.index
+          echo "Hello from Web Server 1A" > /var/www/html/index.html
 
 
 
