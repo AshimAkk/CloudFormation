@@ -33,7 +33,7 @@ Resources:
 
 # creating an IAM role 
 
-  CreatingIAMRole:
+  MyIAMRole:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
@@ -45,3 +45,21 @@ Resources:
             Action: ['sts:AssumeRole']
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/PowerUserAccess'
+
+
+# S3 custom policy 
+# only action this policy can do is 'GetOBject'
+
+  MyIAMPolicy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: 'custome-policy'
+      PolicyDocument: Version '2012-10-17'
+      Statement:
+        - Effect: 'Allow'
+          Action: - "s3:GetObject"
+          Resource: '*'
+          Role:
+            - !Ref MyIAMRole
+
+
