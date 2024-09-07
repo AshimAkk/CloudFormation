@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: 'IAM CloudFormation template'
 
+#Creating IAM user 
 Resources:
   MyIAMUser:
     Type: 'AWS::IAM::User'
@@ -8,3 +9,17 @@ Resources:
       UserName: 'ashim-CFN'
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
+
+
+# Creating a IAM Group 
+  MyIAMGroup:
+    Type: 'AWS::IAM::Group'
+    Properties:
+      GroupName: 'Developers'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+
+
+
+
+# Adding User to group 
