@@ -149,6 +149,7 @@ Resources:
 
 
 # Creating Target Group 
+# registering two Web Server to our target group
 
   MyTargetGroup:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
@@ -157,6 +158,10 @@ Resources:
       HealthCheckEnabled: true 
       Port: 80
       Protocol: 'HTTP'
+      Targets:
+        - Id: !Ref WebServerInstance1A
+        - Id: !Ref WebServerInstance2B
+
 
 
 # listener for ALB 
@@ -223,10 +228,10 @@ Resources:
           Value: 'WebServerInstance2B'
       UserData: 
         Fn::Base64: !Sub |
-        #!/bin/bash
-        yum install -y httpd
-        systemctl start httpd 
-        systemctl enable httpd
-        echo "Hello from Web Server 2B" > /var/www/html/.index
+          #!/bin/bash
+          yum install -y httpd
+          systemctl start httpd 
+          systemctl enable httpd
+          echo "Hello from Web Server 2B" > /var/www/html/.index
 
 
