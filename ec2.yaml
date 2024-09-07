@@ -170,6 +170,19 @@ Resources:
       Port: 80
       Protocol: 'HTTP'
 
+# creating WebServers & ALB Security group
+  WebServerSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Enable HTTP'
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '0.0.0.0/0'
+
+
 # WebServerInstance1A
 # creating instance that will be targeted by our Target-group
 # install apache server on WebServerInstance1A
@@ -215,4 +228,5 @@ Resources:
         systemctl start httpd 
         systemctl enable httpd
         echo "Hello from Web Server 2B" > /var/www/html/.index
+
 
