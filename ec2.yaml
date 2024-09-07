@@ -146,3 +146,27 @@ Resources:
         - !Ref PublicSubnet2B
       SecurityGroups:
         - !Ref WebServerSecurityGroup 
+
+
+# Creating Target Group 
+
+  MyTargetGroup:
+    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Properties:
+      VpcId: !Ref MyVPC
+      HealthCheckEnabled: true 
+      Port: 80
+      Protocol: 'HTTP'
+
+
+# listener for ALB 
+  MyListener:
+    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Properties:
+      DefaultActions:
+        - Type: 'forward'
+          TargetGroupArn: !Ref MyTargetGroup
+      LoadBalancerArn: !Ref MyLoadBalancer
+      Port: 80
+      Protocol: 'HTTP'
+
