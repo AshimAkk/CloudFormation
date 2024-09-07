@@ -170,3 +170,24 @@ Resources:
       Port: 80
       Protocol: 'HTTP'
 
+# WebServerInstance1A
+# creating instance that will be targeted by our targetgroup
+  WebServerInstance1A:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: 't2.micro'
+      ImageId: 'ami-0474411b350de35fb'
+      SubnetId: !Ref PublicSubnet1A
+      SecurityGroupIds:
+        - !Ref WebServerSecurityGroup
+      Tags:
+        - Key: 'Name' 
+          Value: 'WebServerInstance1A'
+      UserData: 
+        Fn::Base64: !Sub |
+        #!/bin/bash
+        yum install -y httpd
+        systemctl start httpd 
+        systemctl enable httpd
+        echo "Hello from Web Server 1A" > /var/www/html/.index
+
