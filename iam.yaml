@@ -23,3 +23,9 @@ Resources:
 
 
 # Adding User to group 
+  AddUser:
+    Type: 'AWS::IAM::UserToGroupAddition'
+    Properties:
+      GroupName: !Ref MyIAMGroup
+      Users:
+        - !Ref MyIAMUser
