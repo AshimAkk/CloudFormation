@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'S3 Static file hosting'
+
+Resources:
+
+# creating an s3 bucket
+
+  mys3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: 'static-s3-bucket-99'
+      WebsiteConfiguration:
+        IndexDocument: 'index.html'
