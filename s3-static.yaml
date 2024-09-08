@@ -5,9 +5,29 @@ Resources:
 
 # creating an s3 bucket
 
-  mys3Bucket:
+  Mys3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: 'static-s3-bucket-99'
       WebsiteConfiguration:
         IndexDocument: 'index.html'
+
+
+# Bucket Policy for MyS3Bucket, allowing public access
+
+  MyBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+         Bucket: !Ref Mys3Bucket
+         PolicyDocument:
+          Version: '2012-10-17'
+          Statement: 
+            - Action:
+                - 's3:GetObject'
+              Effect: Allow
+          ResourceName:
+            - 'arn:aws:s3:::static-s3-bucket-99/index.html'
+          Principal: '*'
+
+
+              
