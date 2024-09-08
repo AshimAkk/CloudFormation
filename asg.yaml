@@ -218,9 +218,7 @@ Resources:
     Type: 'AWS::AutoScaling::ScalingPolicy'
     Properties:
       AutoScalingGroupName: !Ref MyAutoScalingGroup
-      PolicyType: 'SimpleScaling'
-      TargetTrackingConfiguration:
-        TargetValue: !Ref HighCPUAlarm
+      PolicyType: SimpleScaling
       ScalingAdjustment: '1'
       Cooldown: '300'
       AdjustmentType: ChangeInCapacity
