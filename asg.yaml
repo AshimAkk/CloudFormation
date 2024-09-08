@@ -212,8 +212,18 @@ Resources:
         - !Ref ScaleOutPolicy
 
 
-# # Creating a scaling policy 
+# Creating a scaling policy 
 
-#   ScaleOutPolicy:
-#     Type: ''
-#     Properties:
+  ScaleOutPolicy:
+    Type: 'AWS::AutoScaling::ScalingPolicy'
+    Properties:
+      AutoScalingGroupName: !Ref MyAutoScalingGroup
+      PolicyType: 'SimpleScaling'
+      TargetTrackingConfiguration:
+        TargetValue: !Ref HighCPUAlarm
+      ScalingAdjustment: '1'
+      Cooldown: '300'
+      AdjustmentType: ChangeInCapacity
+
+
+
