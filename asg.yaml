@@ -176,7 +176,7 @@ Resources:
 
 
 # ASG
-# also specifing which subnets the ASG should sit in 
+# also specifying which subnets the ASG should sit in 
   MyAutoScalingGroup:
     Type: 'AWS::AutoScaling::AutoScalingGroup'
     Properties:
@@ -192,3 +192,28 @@ Resources:
         - Key: Name
           Value: 'My-AutoScalingGroup'
 
+# Creating CloudWatch alarm for when CPU Utilization is greater than 70%
+
+  HighCPUAlarm:
+    Type:  'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmDescription: 'CPU Utilization is greater than 70%'
+      MetricName: 'CPUUtilization'
+      Namespace: 'AWS/EC2'
+      Statistic: 'Average'
+      EvaluationPeriods: '1'
+      Period: 300
+      Threshold: '70'
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Value: AutoScalingGroupName
+          Name: !Ref MyAutoScalingGroup
+      AlarmActions:
+        - !Ref ScaleOutPolicy
+
+
+# # Creating a scaling policy 
+
+#   ScaleOutPolicy:
+#     Type: ''
+#     Properties:
